@@ -28,12 +28,6 @@ const readCard = async (req = request, res = response) => {
   const { _id } = req.body;
   let cardDB;
   try {
-    // if (_id) {
-    //   cardDB = await Card.findById(_id).populate('screen');
-    // } else {
-    //   cardDB = await Card.find().populate('screen');
-    // }
-
     cardDB = _id
       ? [await Card.findById(_id).populate('screen')]
       : await Card.find().populate('screen');
@@ -51,4 +45,43 @@ const readCard = async (req = request, res = response) => {
   }
 };
 
-module.exports = { createCard, readCard };
+const updateCard = async (req = request, res = response) => {
+  const { _id, ...card } = req.body;
+  try {
+    await Card.findByIdAndUpdate(_id, card);
+
+    res.json({
+      ok: true,
+      ...card,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      ok: false,
+      msg: 'Hable con el administrador',
+    });
+  }
+};
+
+const deleteCard = async (req = request, res = response) => {
+  try {
+    const { _id: cardID } = req.body;
+    const { screen: screenID } = await Card.findByIdAndDelete(cardID);
+    const screenDB = await Screen.findById(screenID);
+    const index = screenDB.cards.indexOf(cardID);
+
+    screenDB.cards.splice(index, 1);
+    await screenDB.save();
+
+    res.json({
+      ok: true,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      ok: false,
+      msg: 'Hable con el administrador',
+    });
+  }
+};
+module.exports = { createCard, readCard, updateCard, deleteCard };
