@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const { dbConnection } = require('./src/database/config');
 const clc = require('cli-color');
+const morgan = require('morgan');
 
 require('dotenv').config();
 
@@ -16,9 +17,11 @@ server.use(
 );
 
 server.use(express.json());
+server.use(morgan('dev'));
 
 server.use('/api/auth', require('./src/routes/auth'));
 server.use('/api/user', require('./src/routes/user'));
+server.use('/api/card', require('./src/routes/card'));
 
 server.use('/api/screen', require('./src/routes/screen'));
 

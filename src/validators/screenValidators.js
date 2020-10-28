@@ -21,14 +21,15 @@ const createScreenValidators = [
 ];
 
 const updateScreenValidator = [
-  check('_id', 'Debe enviar un id válido').isLength({ min: 24, max: 24 }),
-  check('_id').custom(async (_id) => {
-    const existScreen = await Screen.exists({ _id });
+  check('_id', 'Debe enviar un id válido')
+    .isLength({ min: 24, max: 24 })
+    .custom(async (_id) => {
+      const existScreen = await Screen.exists({ _id });
 
-    if (!existScreen) {
-      throw new Error('El id que envio no coincide con ninguna pantalla');
-    }
-  }),
+      if (!existScreen) {
+        throw new Error('El id que envio no coincide con ninguna pantalla');
+      }
+    }),
   check('name', 'Debe enviar un nombre válido')
     .isString()
     .custom(async (name, { req }) => {

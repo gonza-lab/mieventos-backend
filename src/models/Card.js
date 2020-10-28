@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+require('./Screen');
 
 const CardSchema = new Schema({
   title: String,
@@ -15,6 +16,4 @@ const CardSchema = new Schema({
   },
 });
 
-const CardModel = model('Card', CardSchema);
-
-module.exports = { CardSchema, CardModel };
+module.exports = model('Card', CardSchema);

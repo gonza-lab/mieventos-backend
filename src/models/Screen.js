@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const Card = require('../models/Card');
+require('./Card');
 
 const ScreenSchema = new Schema({
   name: {
