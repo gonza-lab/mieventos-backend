@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const clc = require('cli-color');
 
 const dbConnection = async () => {
   try {
@@ -9,7 +10,7 @@ const dbConnection = async () => {
       useFindAndModify: false,
     });
 
-    console.log('DB Online');
+    console.log(clc.greenBright('DB Online'));
   } catch (error) {
     console.log(error);
     throw new Error('Error al inicializar la base de datos: ' + error);
