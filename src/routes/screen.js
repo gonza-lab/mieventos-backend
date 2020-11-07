@@ -18,11 +18,9 @@ const router = Router();
   ${host}/api/screen
 */
 
-router.use(jwtValidator);
-
-router.post('/', [...createScreenValidators], createScreen);
+router.post('/', [jwtValidator, ...createScreenValidators], createScreen);
 router.get('/', readScreen);
-router.put('/', [...updateScreenValidator], updateScreen);
-router.delete('/', [...deleteScreenValidators], deleteScreen);
+router.put('/', [jwtValidator, ...updateScreenValidator], updateScreen);
+router.delete('/', [jwtValidator, ...deleteScreenValidators], deleteScreen);
 
 module.exports = router;

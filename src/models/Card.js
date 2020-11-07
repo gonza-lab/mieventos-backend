@@ -3,10 +3,11 @@ require('./Screen');
 
 const CardSchema = new Schema({
   title: String,
-  posicion: Number,
+  position: Number,
   side: String,
   information: String,
   images: [String],
+  image: String,
   hours: Number,
   price: Number,
   screen: {

@@ -38,7 +38,7 @@ const loginUser = async (req, res) => {
     let user = await Usuario.findOne({ email });
 
     if (!user || !user.comparePassword(password)) {
-    return res.status(400).json({
+      return res.status(400).json({
         ok: false,
         msg: 'Contraseña o email incorrecto',
       });
@@ -60,4 +60,22 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { createUser, loginUser };
+const renewUser = async (req, res) => {
+  try {
+    const token = await createJWT(req.id, req.name);
+
+    res.json({
+      ok: true,
+      id: req.id,
+      token,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      ok: false,
+      msg: 'Hable con el administrador',
+    });
+  }
+};
+
+module.exports = { createUser, loginUser, renewUser };

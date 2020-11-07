@@ -1,4 +1,3 @@
-const { request } = require('express');
 const { check } = require('express-validator');
 const fieldValidator = require('../middlewares/fieldValidator');
 const Screen = require('../models/Screen');
